@@ -1,4 +1,8 @@
-let price = 1.87;
+const customerCash = document.getElementById('cash');
+const purchaseButton = document.getElementById('purchase-btn');
+const changeDue = document.getElementById('change-due');
+
+let price = 20;
 let cid = [
   ['PENNY', 1.01],
   ['NICKEL', 2.05],
@@ -10,3 +14,15 @@ let cid = [
   ['TWENTY', 60],
   ['ONE HUNDRED', 100]
 ];
+
+purchaseButton.addEventListener('click', () => {
+  const customerCashValue = customerCash.value;
+  const change = customerCashValue - price;
+  if (customerCashValue === "") {
+    alert("Please provide cash amount");
+  } else if (customerCashValue < price) {
+    alert("Customer does not have enough money to purchase the item");
+  } else {
+    changeDue.textContent = `Change: $${change}`;
+  }
+})
