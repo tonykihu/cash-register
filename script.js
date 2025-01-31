@@ -26,6 +26,10 @@ let cid = [
   ['ONE HUNDRED', 100]
 ];
 
+function cashDrawer() {
+  
+}
+
 let totalCid = cid.reduce((sum, [_, amount]) => sum + amount, 0).toFixed(2); 
 
 penny.textContent = cid[0][1];
