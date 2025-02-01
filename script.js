@@ -1,68 +1,106 @@
-const customerCash = document.getElementById('cash');
-const purchaseButton = document.getElementById('purchase-btn');
-const changeDue = document.getElementById('change-due');
-const drawerStatus = document.getElementById('status');
-const penny = document.getElementById('penny');
-const nickel = document.getElementById('nickel');
-const dime = document.getElementById('dime');
-const quarter = document.getElementById('quarter');
-const one = document.getElementById('one');
-const five = document.getElementById('five');
-const ten = document.getElementById('ten');
-const twenty = document.getElementById('twenty');
-const hundred = document.getElementById('hundred');
-const total = document.getElementById('total');
+let price = 19.5;
+let cid = [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]];
 
-let price = 20;
-let cid = [
-  ['PENNY', 1.01],
-  ['NICKEL', 2.05],
-  ['DIME', 3.1],
-  ['QUARTER', 4.25],
-  ['ONE', 90],
-  ['FIVE', 55],
-  ['TEN', 20],
-  ['TWENTY', 60],
-  ['ONE HUNDRED', 100]
-];
-
-function cashDrawer() {
-  
-}
-
-let totalCid = cid.reduce((sum, [_, amount]) => sum + amount, 0).toFixed(2); 
-
-penny.textContent = cid[0][1];
-nickel.textContent = cid[1][1];
-dime.textContent = cid[2][1];
-quarter.textContent = cid[3][1];
-one.textContent = cid[4][1];
-five.textContent = cid[5][1];
-ten.textContent = cid[6][1];
-twenty.textContent = cid[7][1];
-hundred.textContent = cid[8][1];
-total.textContent = totalCid;
+const cashInput = document.getElementById('cash');
+const changeDueDiv = document.getElementById('change-due');
+const purchaseBtn = document.getElementById('purchase-btn');
 
 
-purchaseButton.addEventListener('click', () => {
-  const customerCashValue = customerCash.value;
-  const change = customerCashValue - price;
-  changeDue.textContent = `Change: $${change}`
-  if (customerCashValue === "") {
-    alert("Please provide cash amount");
-  } else if (customerCashValue < price) {
-    alert("Customer does not have enough money to purchase the item");
-  } else if (customerCashValue == price){
-    changeDue.textContent = "No change due - customer paid with exact cash";
-  }
-  
-  if (totalCid < change) {
-    drawerStatus.innerHTML = "INSUFFICIENT_FUNDS";
-  } else if (totalCid === change) {
-    drawerStatus.textContent = `CLOSED`;
-  } else {
-    drawerStatus.textContent = "OPEN";
-  }
-  
+function checkCashRegister(price, cash, cid) {
+    let change = cash - price;
+    if (change < 0) {
+      alert("Customer does not have enough money to purchase the item");
+      return;
+    }
+    if (change === 0) {
+      changeDueDiv.textContent = "No change due - customer paid with exact cash";
+      return;
+    }
+
+    let cidTotal = 0;
+    for(let el of cid){
+      cidTotal += el[1];
+    }
+    cidTotal = Math.round(cidTotal*100)/100
+    if (cidTotal < change) {
+        return "Status: INSUFFICIENT_FUNDS";
+    }
+    
+     if (cidTotal === change){
+      let changeString = "Status: CLOSED ";
+      const currencyUnits = {
+        "ONE HUNDRED": 100,
+        "TWENTY": 20,
+        "TEN": 10,
+        "FIVE": 5,
+        "ONE": 1,
+        "QUARTER": 0.25,
+        "DIME": 0.1,
+        "NICKEL": 0.05,
+        "PENNY": 0.01
+    };
+     let changeArray = [];
+        for (let i = cid.length - 1; i >= 0; i--) {
+            const [currencyName, currencyAmount] = cid[i];
+            if(currencyAmount > 0){
+                changeArray.push([currencyName, currencyAmount])
+            }
+
+        }
+       for (let i = 0; i < changeArray.length; i++) {
+          changeString += `${changeArray[i][0]}: $${changeArray[i][1]} `;
+       }
+      
+     return changeString.trimEnd();
+     }
+
+
+    const currencyUnits = {
+        "ONE HUNDRED": 100,
+        "TWENTY": 20,
+        "TEN": 10,
+        "FIVE": 5,
+        "ONE": 1,
+        "QUARTER": 0.25,
+        "DIME": 0.1,
+        "NICKEL": 0.05,
+        "PENNY": 0.01
+    };
+
+    let changeArray = [];
+    for (let i = cid.length - 1; i >= 0; i--) {
+        const [currencyName, currencyAmount] = cid[i];
+        const currencyValue = currencyUnits[currencyName];
+        let amountToGive = 0;
+
+        while (change >= currencyValue && currencyAmount > amountToGive) {
+            change = Math.round((change - currencyValue) * 100) / 100;
+            amountToGive += currencyValue;
+
+        }
+         if (amountToGive > 0) {
+            changeArray.push([currencyName, amountToGive]);
+        }
+    }
+    
+    if (change > 0) {
+      return "Status: INSUFFICIENT_FUNDS";
+    }
+    
+    let changeString = "Status: OPEN ";
+     for (let i = 0; i < changeArray.length; i++) {
+        changeString += `${changeArray[i][0]}: $${changeArray[i][1]} `;
+    }
+    return changeString.trimEnd();
+};
+
+purchaseBtn.addEventListener('click', () => {
+    const cash = parseFloat(cashInput.value);
+    const result = checkCashRegister(price, cash, cid);
+
+    if (result){
+       changeDueDiv.textContent = result;
+    }
+
+
 });
-

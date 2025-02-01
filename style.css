@@ -1,23 +1,63 @@
-#change {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 1fr 1fr 1fr; */
-    grid-gap: 10px;
-    margin-top: 20px;
-}
-
-#cash-in-drawer {
+body {
+    font-family: sans-serif;
+    margin: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: left;
-    align-items: left;
-    margin-top: 20px;
-}
-
-.cid-details {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.input-area{
+    display:flex;
+    flex-direction: column;
+    margin-bottom:15px;
+    gap: 10px;
+}
+.input-area label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-area input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width:100%;
+    box-sizing:border-box;
+}
+
+.input-area button {
+    padding: 10px 15px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+.input-area button:hover{
+    background-color: #4cae4c;
+}
+#change-due {
     margin-top: 20px;
-    width: 50%;
+    padding: 10px;
+    border: 1px solid #eee;
+    background-color: #f9f9f9;
+    border-radius: 3px;
 }

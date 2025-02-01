@@ -3,65 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Cash Register</title>
+    <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-    <h1>Cash Register</h1>
-    <div>
-        <input id="cash"><button id="purchase-btn">Purchase</button></input>
-        <div id="change-due"></div>
+    <div class="container">
+        <h1>Cash Register</h1>
+        <div class="input-area">
+          <label for="cash">Enter Cash:</label>
+          <input type="number" id="cash" min="0" step="0.01" placeholder="Amount of cash">
+          <button id="purchase-btn">Purchase</button>
+        </div>
         
+        <div id="change-due"></div>
     </div>
-    <div id="change">
-        <div id="cash-in-drawer">
-            <h2>Cash in Drawer</h2>
-            <div class="cid-details">
-                <label for="total"><strong>TOTAL</strong></label>
-                <p id="total"></p>
-            </div>
-            <div class="cid-details">
-                <label for="penny">Penny</label>
-                <p id="penny"></p>
-            </div>
-            <div class="cid-details">
-                <label for="nickel">Nickel</label>
-                <p id="nickel"></p>
-            </div>
-            <div class="cid-details">
-                <label for="dime">Dime</label>
-                <p id="dime"></p>
-            </div>
-            <div class="cid-details">
-                <label for="quarter">Quarter</label>
-                <p id="quarter"></p>
-            </div>
-            <div class="cid-details">
-                <label for="one">One</label>
-                <p id="one"></p>
-            </div>
-            <div class="cid-details">
-                <label for="five">Five</label>
-                <p id="five"></p>
-            </div>
-            <div class="cid-details">
-                <label for="ten">Ten</label>
-                <p id="ten"></p>
-            </div>
-            <div class="cid-details">
-                <label for="twenty">Twenty</label>
-                <p id="twenty"></p>
-            </div>
-            <div class="cid-details">
-                <label for="hundred">One Hundred</label>
-                <p id="hundred"></p>
-            </div>
-        </div>
-        <div>
-            <label for="status"><strong>STATUS</strong></label>
-            <p id="status"></p>
-        </div>
-    </div>
+    <script src="script2.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
